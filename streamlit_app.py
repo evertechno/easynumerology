@@ -2,19 +2,15 @@ import streamlit as st
 import google.generativeai as genai
 import datetime
 
-# Configure the API key securely from Streamlit's secrets
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
-# Streamlit App UI
 st.title("Numerology Analysis with Ever AI")
 st.write("Enter your name and birthdate for a comprehensive numerology analysis.")
 
-# Input fields
 name = st.text_input("Enter your full name:")
 birthdate = st.date_input("Enter your birthdate:")
 
 def calculate_life_path(birthdate):
-    """Calculates the Life Path number."""
     day = birthdate.day
     month = birthdate.month
     year = birthdate.year
@@ -24,7 +20,6 @@ def calculate_life_path(birthdate):
     return total
 
 def calculate_expression(name):
-    """Calculates the Expression number."""
     name = name.lower()
     vowel_values = {'a': 1, 'e': 5, 'i': 9, 'o': 6, 'u': 3}
     consonant_values = {
@@ -46,7 +41,6 @@ def calculate_expression(name):
     return total
 
 def calculate_soul_urge(name):
-    """Calculates the Soul Urge number."""
     name = name.lower()
     vowel_values = {'a': 1, 'e': 5, 'i': 9, 'o': 6, 'u': 3}
     vowel_sum = 0
@@ -58,7 +52,6 @@ def calculate_soul_urge(name):
     return vowel_sum
 
 def calculate_personality(name):
-    """Calculates the Personality number."""
     name = name.lower()
     consonant_values = {
         'b': 2, 'c': 3, 'd': 4, 'f': 8, 'g': 3, 'h': 8, 'j': 1, 'k': 2, 'l': 3,
@@ -74,11 +67,9 @@ def calculate_personality(name):
     return consonant_sum
 
 def calculate_birthday(birthdate):
-    """Calculates the Birthday number."""
     return birthdate.day if birthdate.day <= 9 else sum(map(int, str(birthdate.day)))
 
 def calculate_attitude(birthdate):
-    """Calculates the Attitude number."""
     month = birthdate.month
     day = birthdate.day
     total = month + day
@@ -87,7 +78,6 @@ def calculate_attitude(birthdate):
     return total
 
 def calculate_karmic_numbers(name, birthdate):
-    """Calculates the karmic debt numbers."""
     name = name.lower()
     birthdate_str = str(birthdate.day) + str(birthdate.month) + str(birthdate.year)
     total_str = name + birthdate_str
@@ -98,7 +88,6 @@ def calculate_karmic_numbers(name, birthdate):
     return karmic_numbers
 
 def calculate_master_numbers(life_path, expression, soul_urge, personality):
-    """Calculates the master numbers."""
     master_numbers = []
     if life_path in [11, 22, 33]:
         master_numbers.append(life_path)
@@ -111,7 +100,6 @@ def calculate_master_numbers(life_path, expression, soul_urge, personality):
     return master_numbers
 
 def calculate_maturity(life_path, expression):
-    """calculates the maturity number"""
     mature = life_path + expression
     while mature > 9 and mature != 11 and mature != 22 and mature != 33:
         mature = sum(map(int, str(mature)))
@@ -160,4 +148,8 @@ if st.button("Calculate Numerology"):
         st.write(f"Personality Number: {personality}")
         st.write(f"Birthday Number: {birthday}")
         st.write(f"Attitude Number: {attitude}")
-        st.write(f"K
+        st.write(f"Karmic Numbers: {karmic_numbers}")
+        st.write(f"Master Numbers: {master_numbers}")
+        st.write(f"Maturity Number: {maturity_number}")
+        st.write(f"Current Year Number: {current_year_number}")
+        st.write(f"Current Month Number: {current_month_number}")
