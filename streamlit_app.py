@@ -128,6 +128,102 @@ def calculate_personal_month(birthdate):
         personal_month = sum(map(int, str(personal_month)))
     return personal_month
 
+def calculate_personal_day(birthdate):
+    current_year = datetime.date.today().year
+    current_month = datetime.date.today().month
+    current_day = datetime.date.today().day
+    personal_year = calculate_personal_year(birthdate, current_year)
+    personal_month = personal_year + current_month
+    personal_day = personal_month + current_day
+    while personal_day > 9:
+        personal_day = sum(map(int, str(personal_day)))
+    return personal_day
+
+def calculate_challenge_numbers(birthdate):
+    day = birthdate.day
+    month = birthdate.month
+    year = birthdate.year
+    challenges = [abs(day - month), abs(month - year), abs(day - year)]
+    challenges = [sum(map(int, str(ch))) for ch in challenges]
+    return challenges
+
+def calculate_pinnacle_numbers(birthdate):
+    day = birthdate.day
+    month = birthdate.month
+    year = birthdate.year
+    pinnacle1 = sum(map(int, str(day + month)))
+    pinnacle2 = sum(map(int, str(month + year)))
+    pinnacle3 = sum(map(int, str(day + year)))
+    pinnacle4 = sum(map(int, str(pinnacle1 + pinnacle2 + pinnacle3)))
+    return [pinnacle1, pinnacle2, pinnacle3, pinnacle4]
+
+def calculate_essence_number(birthdate):
+    today = datetime.date.today()
+    current_year = today.year
+    personal_year = calculate_personal_year(birthdate, current_year)
+    essence_number = sum(map(int, str(personal_year)))
+    return essence_number
+
+def calculate_balance_number(name):
+    name = name.lower()
+    vowel_values = {'a': 1, 'e': 5, 'i': 9, 'o': 6, 'u': 3}
+    consonant_values = {
+        'b': 2, 'c': 3, 'd': 4, 'f': 8, 'g': 3, 'h': 8, 'j': 1, 'k': 2, 'l': 3,
+        'm': 4, 'n': 5, 'p': 7, 'q': 8, 'r': 9, 's': 1, 't': 2, 'v': 6, 'w': 6,
+        'x': 5, 'y': 1, 'z': 7
+    }
+    vowel_sum = 0
+    consonant_sum = 0
+    for char in name:
+        if 'a' <= char <= 'z':
+            if char in vowel_values:
+                vowel_sum += vowel_values[char]
+            else:
+                consonant_sum += consonant_values[char]
+    balance_number = abs(vowel_sum - consonant_sum)
+    return balance_number
+
+def calculate_habit_challenges(birthdate):
+    day = birthdate.day
+    month = birthdate.month
+    year = birthdate.year
+    habit_challenges = [sum(map(int, str(abs(day - month)))),
+                        sum(map(int, str(abs(month - year)))),
+                        sum(map(int, str(abs(day - year))))]
+    return habit_challenges
+
+def calculate_personal_day_number(birthdate):
+    today = datetime.date.today()
+    personal_year = calculate_personal_year(birthdate, today.year)
+    personal_month = calculate_personal_month(birthdate)
+    personal_day = personal_year + personal_month + today.day
+    while personal_day > 9:
+        personal_day = sum(map(int, str(personal_day)))
+    return personal_day
+
+def calculate_subconscious_self(name):
+    name = name.lower()
+    vowels = 'aeiou'
+    consonants = 'bcdfghjklmnpqrstvwxyz'
+    vowel_count = sum([1 for char in name if char in vowels])
+    consonant_count = sum([1 for char in name if char in consonants])
+    subconscious_self = abs(vowel_count - consonant_count)
+    return subconscious_self
+
+def calculate_hidden_passions(name):
+    name = name.lower()
+    passions = {char: name.count(char) for char in set(name) if name.count(char) > 1}
+    return passions
+
+def calculate_birth_year_number(birthdate):
+    return sum(map(int, str(birthdate.year)))
+
+def calculate_birth_month_number(birthdate):
+    return sum(map(int, str(birthdate.month)))
+
+def calculate_destiny_number(birthdate):
+    return calculate_life_path(birthdate)
+
 if st.button("Calculate Numerology"):
     if name and birthdate:
         life_path = calculate_life_path(birthdate)
@@ -141,6 +237,18 @@ if st.button("Calculate Numerology"):
         maturity_number = calculate_maturity(life_path, expression)
         current_year_number = calculate_current_year(birthdate)
         current_month_number = calculate_personal_month(birthdate)
+        personal_day_number = calculate_personal_day(birthdate)
+        challenge_numbers = calculate_challenge_numbers(birthdate)
+        pinnacle_numbers = calculate_pinnacle_numbers(birthdate)
+        essence_number = calculate_essence_number(birthdate)
+        balance_number = calculate_balance_number(name)
+        habit_challenges = calculate_habit_challenges(birthdate)
+        personal_day_number = calculate_personal_day_number(birthdate)
+        subconscious_self = calculate_subconscious_self(name)
+        hidden_passions = calculate_hidden_passions(name)
+        birth_year_number = calculate_birth_year_number(birthdate)
+        birth_month_number = calculate_birth_month_number(birthdate)
+        destiny_number = calculate_destiny_number(birthdate)
 
         st.write(f"Life Path Number: {life_path}")
         st.write(f"Expression Number: {expression}")
@@ -153,3 +261,15 @@ if st.button("Calculate Numerology"):
         st.write(f"Maturity Number: {maturity_number}")
         st.write(f"Current Year Number: {current_year_number}")
         st.write(f"Current Month Number: {current_month_number}")
+        st.write(f"Personal Day Number: {personal_day_number}")
+        st.write(f"Challenge Numbers: {challenge_numbers}")
+        st.write(f"Pinnacle Numbers: {pinnacle_numbers}")
+        st.write(f"Essence Number: {essence_number}")
+        st.write(f"Balance Number: {balance_number}")
+        st.write(f"Habit Challenges: {habit_challenges}")
+        st.write(f"Personal Day Number: {personal_day_number}")
+        st.write(f"Subconscious Self: {subconscious_self}")
+        st.write(f"Hidden Passions: {hidden_passions}")
+        st.write(f"Birth Year Number: {birth_year_number}")
+        st.write(f"Birth Month Number: {birth_month_number}")
+        st.write(f"Destiny Number: {destiny_number}")
