@@ -1,10 +1,18 @@
 import streamlit as st
 import google.generativeai as genai
 import datetime
+import plotly.express as px
+import matplotlib.pyplot as plt
 
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
-st.title("Numerology Analysis with Ever AI")
+st.set_page_config(
+    page_title="Numerology Analysis with Ever AI",
+    page_icon="🔮",
+    layout="wide",
+)
+
+st.title("🔮 Numerology Analysis with Ever AI")
 st.write("Enter your name and birthdate for a comprehensive numerology analysis.")
 
 name = st.text_input("Enter your full name:")
